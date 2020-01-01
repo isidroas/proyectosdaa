@@ -1,19 +1,16 @@
+import flask
+from flask import render_template, jsonify
+
 import time
-from random import random
 import sys
-sys.path.append('../sensoresMeteo')
-from manejaBaseDatos import enviaDatos 
+sys.path.append('../')
+from manejaBaseDatos import recibeDatos 
 
+app = flask.Flask(__name__)
 
-while True:
-    Lum=random()*2+35
-    Temp=random()*1+20
-    tiempo=time.time()
-    paqueteEnviar={}
-    paqueteEnviar['sensorLum']={'valor':Lum,'tiempo': tiempo} # Mirar el archivo parametros.yaml para ver que claves se le pueden añadir al diccionario
-    paqueteEnviar['sensorTemp']={'valor':Temp,'tiempo': tiempo}
-    print(paqueteEnviar)
-    enviaDatos(paqueteEnviar)
-
-    time.sleep(1)
+@app.route('/')
+def principal():
+    paqueteEnviar=['sensorTemp']
+    datos=recibeDatos(paqueteEnviar)
+    return render_template('index.html',temp=datos['sensorTemp']['valor'])
 

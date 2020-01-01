@@ -30,7 +30,9 @@ while True:
     elif type(datos)==type([]):
         # Es un lista. Hay que devolver un diccionario 
         print( 'datos es una lista')
-        paqueteEnviar={'key':0}
+        paqueteEnviar={}
+        for i in datos:
+            paqueteEnviar[i]=sensores[i]
         con.send(paqueteEnviar)
     else:
         print( 'no es ni diccionario ni lista')
