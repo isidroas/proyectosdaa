@@ -14,3 +14,19 @@ def principal():
     datos=recibeDatos(paqueteEnviar)
     return render_template('index.html',temp=datos['sensorTemp']['valor'])
 
+@app.route('/dynamicChart')
+def dynamicChart():
+    return render_template('dynamicChart.html')
+
+@app.route('/devuelveDatos',methods=['POST'])
+def devuelveDatos():
+    print(" Se ha recibido un Ajax:")
+    datos1=flask.request.form
+    print(datos1)
+    peticiones=datos1.getlist("datos[]")
+    
+    print(peticiones)
+    datos=recibeDatos(peticiones)
+    print("Se va a enviar por ajax al cliente:")
+    print(datos)
+    return jsonify(datos )
