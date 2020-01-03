@@ -15,7 +15,19 @@ window.onload = function () {
 var dps = []; // dataPoints
 var chart = new CanvasJS.Chart("chartContainer", {
 	title :{
-		text: "Dynamic Data"
+		text: "Luminosidad"
+	},
+	axisY: {
+		includeZero: false
+	},      
+	data: [{
+		type: "line",
+		dataPoints: dps
+	}]
+});
+var chart2 = new CanvasJS.Chart("chartContainer2", {
+	title :{
+		text: "Temperatura"
 	},
 	axisY: {
 		includeZero: false
@@ -37,18 +49,17 @@ var devuelveDatos = function(datosPedidos){
 		type: 'POST',
 		async: false,
 		url: "/devuelveDatos",
-		data: {datos : ["sensorTemp", "sensorLum"]},
+		data: {datos : datosPedidos},
 		success: function(datos){datosRecibidos=datos;}
 	});
 	
 	return datosRecibidos 
 }
 
-var updateChart = function (count) {
+var updateChart = function () {
 
-	var datosRecibidos=devuelveDatos('sensorLum')
+	var datosRecibidos=devuelveDatos(["sensorTemp", "sensorLum"])
 	console.log(datosRecibidos);
-	//yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
 	yVal=datosRecibidos.sensorLum.valor;
 	dps.push({
 		x: xVal,
@@ -62,15 +73,20 @@ var updateChart = function (count) {
 
 	chart.render();
 };
-console.log(devuelveDatos('sensorTemp'));
-updateChart(dataLength);
+//console.log(devuelveDatos('sensorTemp'));
+//updateChart(dataLength);
 setInterval(function(){updateChart()}, updateInterval);
 
 }
 </script>
 </head>
 <body>
+	<p>
 <div id="chartContainer" style="height: 370px; width:100%;"></div>
+	</p>
+	<p>
+<div id="chartContainer2" style="height: 370px; width:100%;"></div>
+	</p>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 </html>

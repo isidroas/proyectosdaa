@@ -1,7 +1,6 @@
 import time
 from random import random
 import sys
-sys.path.append('../')
 from manejaBaseDatos import enviaDatos 
 
 
