@@ -18,6 +18,10 @@ def principal():
 def dynamicChart():
     return render_template('dynamicChart.html')
 
+@app.route('/chartjs')
+def chartjs():
+    return render_template('chartjs.html')
+
 @app.route('/devuelveDatos',methods=['POST'])
 def devuelveDatos():
     print(" Se ha recibido un Ajax:")

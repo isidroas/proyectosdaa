@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<style>
+	canvas{
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+</style>
+
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous">
+</script>
+
+<script>
+
+window.onload = function () {
+
+
+var updateInterval = 1000;
+
+var devuelveDatos = function(datosPedidos){
+	var datosRecibidos={};
+	jQuery.ajax({
+		type: 'POST',
+		async: false,
+		url: "/devuelveDatos",
+		data: {datos : datosPedidos},
+		success: function(datos){datosRecibidos=datos;}
+	});
+	
+	return datosRecibidos 
+}
+
+var config ={
+	type: 'line',
+	data: {
+		labels:['-8', '-7', '-6', '-2', '-1', '0'],
+		datasets: [
+			{
+				label: 'Temperatura',
+				backgroundColor: window.chartColors.red,
+				borderColor: window.chartColors.red,
+				data:[30,31,29,35,28,33],
+				fill: false
+			}
+		]
+	}
+}
+
+var ctx = document.getElementById('canvas').getContext('2d');
+window.myLine = new Chart(ctx, config);
+
+
+var updateChart = function () {
+
+
+	var datosRecibidos=devuelveDatos(["sensorTemp", "sensorLum"])
+	console.log(datosRecibidos);
+	yVal=datosRecibidos.sensorLum.valor;
+
+	//config.data.labels.push("Nuevo DAto");
+	//config.data.labels.shift();
+
+	//config.data.datasets[0].data.push( randomScalingFactor());
+
+	config.data.datasets[0].data.push( yVal);
+	config.data.datasets[0].data.shift();
+
+	window.myLine.update();
+
+
+	
+};
+setInterval(function(){updateChart()}, updateInterval);
+
+}
+</script>
+</head>
+<body>
+	<div style="width:75%;">
+		<canvas id="canvas"></canvas>
+	</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+<script src="{{url_for('static', filename='utils.js')}}"></script>
+</body>
+</html>
