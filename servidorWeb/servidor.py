@@ -4,7 +4,7 @@ from flask import render_template, jsonify
 import time
 import sys
 sys.path.append('../')
-from manejaBaseDatos import recibeDatos 
+from manejaMiddleware import recibeDatos 
 
 app = flask.Flask(__name__)
 

@@ -1,7 +1,7 @@
 import time
 from random import random
 import sys
-from manejaBaseDatos import enviaDatos 
+from manejaMiddleware import enviaDatos 
 
 
 while True:

@@ -1,4 +1,5 @@
 export FLASK_APP=./servidorWeb/servidor.py
+export PYTHONPATH=$PYTHONPATH:/home/pi/proyectoSDAA
 
 
 .PHONY: venv-source
@@ -25,18 +26,36 @@ sensoresMeteo:
 		python3 ./sensoresMeteo.py; \
 	)
 
-.PHONY: baseDatosServ
-baseDatosServ: 
+.PHONY: middleware
+middleware: 
 	(\
 		. ./venv/bin/activate; \
-		python3 baseDatosServ/baseDatosServ.py; \
+		python3 middleware/middleware.py; \
 	)
+
+.PHONY: baseDatos
+baseDatos: 
+	(\
+		. ./venv/bin/activate; \
+		python3 baseDatos/baseDatos.py; \
+	)
+
+.PHONY: crearBaseDatos
+crearBaseDatos: 
+	(\
+		. ./venv/bin/activate; \
+		python3 baseDatos/creaBaseDatos.py; \
+	)
+
+.PHONY: eliminaBaseDatos
+eliminaBaseDatos: 
+	rm baseDatos/datosMeteo.db
 
 
 all: 
 	(\
 		. ./venv/bin/activate; \
-		python3 baseDatosServ/baseDatosServ.py; \
+		python3 middleware/middleware.py; \
 	)&
 	(\
 		. ./venv/bin/activate; \
