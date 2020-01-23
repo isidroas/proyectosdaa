@@ -4,19 +4,28 @@ import yaml
 # Diccionario con los últimos datos de los sensores
 sensores={}
 
+# Lista con el nombre de cada uno de los sensores
+listaSensores=[]
+
+puerto=5000
+
 def cargarParametros():
     with open(r'./parametros.yaml') as file:
         # The FullLoader parameter handles the conversion from YAML
         # scalar values to Python the dictionary format
         parametros = yaml.load(file, Loader=yaml.FullLoader)
+        global listaSensores
         listaSensores=parametros['sensores']
-        for i in listaSensores:
-            sensores[i]={'valor':1.0, 'tiempo':0} # Valor cualquiera para inicializar
-        print(sensores)
+        global puerto
+        puerto = parametros['puerto']
 
 cargarParametros()
+# Valor inicial a los datos 
+for i in listaSensores:
+    sensores[i]={'valor':1.0, 'tiempo':0} # Valor cualquiera para inicializar
 
-list=Listener(address=('localhost',6000))
+
+list=Listener(address=('localhost',puerto))
 while True:
     con=list.accept()
     datos=con.recv()

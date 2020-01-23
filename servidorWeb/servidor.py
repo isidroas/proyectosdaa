@@ -1,5 +1,5 @@
 import flask
-from flask import render_template, jsonify
+from flask import render_template, jsonify, send_from_directory
 
 import time
 import sys
@@ -34,3 +34,7 @@ def devuelveDatos():
     print("Se va a enviar por ajax al cliente:")
     print(datos)
     return jsonify(datos )
+
+@app.route('/descarga', methods=['GET', 'POST'])
+def download():
+    return send_from_directory(directory='/home/pi/proyectoSDAA/baseDatos', filename='datosMeteo.db')

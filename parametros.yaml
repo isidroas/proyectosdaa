@@ -4,6 +4,6 @@ sensores:
         # Cada una de estas claves están asociadas con un diccionario {'valor': ..., 'tiempo': ...}
         # En la clave tiempo estará asociado un entero que representa el tiempo absoluto en segundos. 
         # Este valor se puede obtener con la función time.time()
-        - sensorLum
         - sensorTemp
-        - sensorTempHist
+        - sensorHum
+        - sensorPres
