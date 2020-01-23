@@ -5,7 +5,7 @@ import yaml
 sensores={}
 
 def cargarParametros():
-    with open(r'/home/pi/proyectoSDAA/parametros.yaml') as file:
+    with open(r'./parametros.yaml') as file:
         # The FullLoader parameter handles the conversion from YAML
         # scalar values to Python the dictionary format
         parametros = yaml.load(file, Loader=yaml.FullLoader)

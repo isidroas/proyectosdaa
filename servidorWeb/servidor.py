@@ -8,17 +8,17 @@ from manejaMiddleware import recibeDatos
 
 app = flask.Flask(__name__)
 
+#@app.route('/')
+#def principal():
+#    paqueteEnviar=['sensorTemp']
+#    datos=recibeDatos(paqueteEnviar)
+#    return render_template('index.html',temp=datos['sensorTemp']['valor'])
+
+#@app.route('/dynamicChart')
+#def dynamicChart():
+#    return render_template('dynamicChart.html')
+
 @app.route('/')
-def principal():
-    paqueteEnviar=['sensorTemp']
-    datos=recibeDatos(paqueteEnviar)
-    return render_template('index.html',temp=datos['sensorTemp']['valor'])
-
-@app.route('/dynamicChart')
-def dynamicChart():
-    return render_template('dynamicChart.html')
-
-@app.route('/chartjs')
 def chartjs():
     return render_template('chartjs.html')
 
