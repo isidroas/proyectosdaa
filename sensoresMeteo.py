@@ -1,6 +1,5 @@
 import time
 from random import random
-import sys
 from manejaMiddleware import enviaDatos 
 
 
