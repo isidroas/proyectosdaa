@@ -32,14 +32,15 @@ while True:
 
     if type(datos)==type({}):
         # Es un diccionario. Solo hay que devolver ACK
-        print( 'datos es un diccionario')
+        #print( 'datos es un diccionario')
         sensores.update(datos)
+        print(" --- LO QUE SE RECIBE EN MIDDLEWARE ---")
         print(sensores)
         con.send("ACK")
     elif type(datos)==type([]):
         # Es un lista. Hay que devolver un diccionario 
-        print( 'datos es una lista')
-        print(datos)
+        #print( 'datos es una lista')
+        #print(datos)
         paqueteEnviar={}
         for i in datos:
             paqueteEnviar[i]=sensores[i]

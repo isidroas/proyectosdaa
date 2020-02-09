@@ -24,15 +24,15 @@ def chartjs():
 
 @app.route('/devuelveDatos',methods=['POST'])
 def devuelveDatos():
-    print(" Se ha recibido un Ajax:")
+    #print(" Se ha recibido un Ajax:")
     datos1=flask.request.form
-    print(datos1)
+    #print(datos1)
     peticiones=datos1.getlist("datos[]")
     
-    print(peticiones)
+    #print(peticiones)
     datos=recibeDatos(peticiones)
-    print("Se va a enviar por ajax al cliente:")
-    print(datos)
+    #print("Se va a enviar por ajax al cliente:")
+    #print(datos)
     return jsonify(datos )
 
 @app.route('/descarga', methods=['GET', 'POST'])

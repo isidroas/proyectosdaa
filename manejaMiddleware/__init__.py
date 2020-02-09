@@ -18,6 +18,8 @@ def enviaDatos(paquete):
     con = multiprocessing.connection.Client(address=('localhost',puerto))
     con.send(paquete)
     resp=con.recv()
+    print(" --- LO QUE SE VA A ENVIAR A MIDDLEWARE DESDE EL SUBSCRIPTOR ---")
+    print(paquete)
     if resp!='ACK':
         print('La base de datos no ha respondido con ACK')
 

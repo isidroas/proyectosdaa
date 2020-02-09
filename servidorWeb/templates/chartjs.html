@@ -10,11 +10,6 @@
 	}
 </style>
 
-<script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous">
-</script>
 
 <script>
 
@@ -36,38 +31,89 @@ var devuelveDatos = function(datosPedidos){
 	return datosRecibidos 
 }
 
-var config ={
+
+var configT ={
 	type: 'line',
 	data: {
-		labels:['-8', '-7', '-6', '-2', '-1', '0'],
+		labels:['-14','-13','-12','-11','-10','-9','-8', '-7', '-6', '-2', '-1', '0'],
 		datasets: [
 			{
 				label: 'Temperatura',
 				backgroundColor: window.chartColors.red,
 				borderColor: window.chartColors.red,
-				data:[30,31,29,35,28,33],
+				data:[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],
 				fill: false
-			},
+			}
+		]
+	},
+	options:{
+
+		//tooltips: {
+		//	mode: 'index',
+		//	intersect: false,
+		//},
+		//hover: {
+		//	mode: 'nearest',
+		//	intersect: true
+		//},
+		scales: {
+			xAxes: [{
+				display: true,
+				scaleLabel: {
+					display: true,
+					labelString: 'Tiempo (s)'
+				}
+			}],
+			yAxes: [{
+				display: true,
+				scaleLabel: {
+					display: true,
+					labelString: 'Temperatura (°C)'
+				}
+			}]
+		}
+
+
+	}
+}
+var configH ={
+	type: 'line',
+	data: {
+		labels:['-14','-13','-12','-11','-10','-9','-8', '-7', '-6', '-2', '-1', '0'],
+		datasets: [
 			{
 				label: 'Humedad',
 				backgroundColor: window.chartColors.green,
 				borderColor: window.chartColors.green,
-				data:[20,21,29,25,28,23],
-				fill: false
-			},
-			{
-				label: 'Presión',
-				backgroundColor: window.chartColors.blue,
-				borderColor: window.chartColors.blue,
-				data:[20,21,29,25,28,23],
+				data:[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],
 				fill: false
 			}
 		]
 	}
 }
 
-var ctx = document.getElementById('canvas').getContext('2d');
-window.myLine = new Chart(ctx, config);
+var configP ={
+	type: 'line',
+	data: {
+		labels:['-14','-13','-12','-11','-10','-9','-8', '-7', '-6', '-2', '-1', '0'],
+		datasets: [
+			{
+				label: 'Presion',
+				backgroundColor: window.chartColors.blue,
+				borderColor: window.chartColors.blue,
+				data:[20,20,20,20,20,20,20,20,20,20,20,20,20,20,20],
+				fill: false
+			}
+		]
+	}
+}
+
+var ctxT = document.getElementById('canvasT').getContext('2d');
+var ctxH = document.getElementById('canvasH').getContext('2d');
+var ctxP = document.getElementById('canvasP').getContext('2d');
+window.myLineT = new Chart(ctxT, configT);
+window.myLineH = new Chart(ctxH, configH);
+window.myLineP = new Chart(ctxP, configP);
 
 
 var updateChart = function () {
@@ -79,21 +125,24 @@ var updateChart = function () {
 	yVal_hum=datosRecibidos.sensorHum.valor;
 	yVal_pres=datosRecibidos.sensorPres.valor;
 
-	//config.data.labels.push("Nuevo DAto");
-	//config.data.labels.shift();
 
-	//config.data.datasets[0].data.push( randomScalingFactor());
+	configT.data.datasets[0].data.push( yVal_temp);
+	configT.data.datasets[0].data.shift();
 
-	config.data.datasets[0].data.push( yVal_temp);
-	config.data.datasets[0].data.shift();
+	configH.data.datasets[0].data.push( yVal_hum);
+	configH.data.datasets[0].data.shift();
 
-	config.data.datasets[1].data.push( yVal_hum);
-	config.data.datasets[1].data.shift();
+	configP.data.datasets[0].data.push( yVal_pres);
+	configP.data.datasets[0].data.shift();
 
-	config.data.datasets[2].data.push( yVal_pres);
-	config.data.datasets[2].data.shift();
+	window.myLineT.update();
+	window.myLineH.update();
+	window.myLineP.update();
 
-	window.myLine.update();
+	//$("temperatura").innerHTML=yVal_temp;
+	document.getElementById("temperaturaValor").innerHTML=yVal_temp;
+	document.getElementById("humedadValor").innerHTML=yVal_hum;
+	document.getElementById("presionValor").innerHTML=yVal_pres;
 };
 
 setInterval(function(){updateChart()}, updateInterval);
@@ -104,9 +153,42 @@ setInterval(function(){updateChart()}, updateInterval);
 
 <body>
 	<div style="width:75%;">
-		<canvas id="canvas"></canvas>
+		<table align="center">
+		  <tr>
+		    <td><img  src="{{url_for('static', filename='termometro.png')}}" width="42"></td>
+		    <td>Temperatura=</td>
+		    <td><div id="temperaturaValor">No se ha recibido temperatura</div></td>
+		    <td>°C</td>
+		  </tr>
+		</table>
+		<canvas id="canvasT"></canvas>
+		<br>
+		<br>
+
+		<table align="center">
+		  <tr>
+		    <td><img  src="{{url_for('static', filename='humedad.png')}}" width="42"></td>
+		    <td>Humedad =</td>
+		    <td><div id="humedadValor">No se ha recibido humedad</div></td>
+		    <td>%</td>
+		  </tr>
+		</table>
+		<canvas id="canvasH"></canvas>
+		<br>
+		<br>
+
+		<table align="center">
+		  <tr>
+		    <td><img  src="{{url_for('static', filename='presion.png')}}" width="42"></td>
+		    <td>Presion=</td>
+		    <td><div id="presionValor">No se ha recibido presion</div></td>
+		    <td>hPa</td>
+		  </tr>
+		</table>
+		<canvas id="canvasP"></canvas>
 	</div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3"></script>
+<script src="{{url_for('static', filename='chart.js@2.9.3')}}"></script>
 <script src="{{url_for('static', filename='utils.js')}}"></script>
+<script src="{{url_for('static', filename='jquery-3.4.1.js')}}"></script>
 </body>
 </html>
