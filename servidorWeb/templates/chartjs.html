@@ -186,6 +186,21 @@ setInterval(function(){updateChart()}, updateInterval);
 		  </tr>
 		</table>
 		<canvas id="canvasP"></canvas>
+
+		<br>
+		<br>
+		<table align="center">
+		  <tr>
+		    <td>
+		<a href="/sql-viewer">
+		<img  src="{{url_for('static', filename='database.png')}}" width="62" >
+		</a>
+		    </td>
+		    <td>
+			    Datos previos
+		    </td>
+		  </tr>
+		</table>
 	</div>
 <script src="{{url_for('static', filename='chart.js@2.9.3')}}"></script>
 <script src="{{url_for('static', filename='utils.js')}}"></script>

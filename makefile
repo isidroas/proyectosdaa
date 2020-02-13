@@ -82,9 +82,10 @@ all: elimina-procesos
 		. ./venv/bin/activate; \
 		python3 ./lecturaSensores/subscriptor_presion.py; \
 	)&
+	sudo -E bash -c '. ./venv/bin/activate ;python3 -m flask run --host=0.0.0.0 -p 80' &
+	sleep 2
 	(\
 		. ./venv/bin/activate; \
 		python3 baseDatos/baseDatos.py; \
-	)&
-	sudo -E bash -c '. ./venv/bin/activate ;python3 -m flask run --host=0.0.0.0 -p 80'
+	)
 
