@@ -4,4 +4,4 @@ Para iniciar todos los procesos necesarios, incluidos la página web, el broker 
 
 El esquema de comunicaciones entre los procesos es el siguiente:
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/isidroas/proyectosdaa/blob/master/esquema-sofware.png "Esquema del software")
